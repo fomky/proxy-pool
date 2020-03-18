@@ -1,5 +1,7 @@
 package org.primi.proxy.pool.store;
 
+import org.primi.proxy.pool.entity.ProxyStatistics;
+
 import java.util.List;
 
 /**
@@ -10,8 +12,24 @@ import java.util.List;
 public interface ProxyStore {
     /**
      * update and replace
-     * @param proxies Proxy list
+     *
+     * @param proxies Proxy list {@link ProxyStatistics}
      */
-    void updateActives(List<ProxyStore> proxies);
+    void updateActives(List<ProxyStatistics> proxies);
 
+    /**
+     * Add one proxy;
+     *
+     * @param proxy proxy Object {@link ProxyStatistics}
+     */
+    void addActive(ProxyStatistics proxy);
+
+    /**
+     * resume from sotre
+     *
+     * @return {}
+     */
+    default List<ProxyStatistics> resume() {
+        return null;
+    }
 }

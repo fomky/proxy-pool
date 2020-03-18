@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 
 /**
@@ -12,10 +14,23 @@ import java.io.Serializable;
  * @author Primi.Chen
  */
 @Data
+@Builder
 public class ProxyStatistics implements Serializable {
-    @Builder.ObtainVia(isStatic = true,method = "of")
     private String uid;
+
+    private Proxy.Type type;
+
     private String hostname;
+
     private Integer port;
+
     private ProxyStatus status;
+
+    public String key() {
+        return String.format("%s@%s:%s", type.toString(), hostname, port);
+    }
+
+    public Proxy proxy() {
+        return new Proxy(type, new InetSocketAddress(hostname, port));
+    }
 }
