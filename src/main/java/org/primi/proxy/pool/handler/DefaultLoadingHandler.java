@@ -42,6 +42,10 @@ public class DefaultLoadingHandler implements LoadingHandler {
 
     @Override
     public List<ProxyStatistics> load(BaseHandler handler) {
+        // 静态代理模式
+        if (handler.staticModel()) {
+            return handler.parserPageContent(null);
+        }
         List<ProxyStatistics> backList = new ArrayList<>();
         List<ProxyListPage> pages = handler.parserLoadPages();
         if (Objects.nonNull(pages)) {
@@ -73,7 +77,7 @@ public class DefaultLoadingHandler implements LoadingHandler {
                     .execute();
             return response.statusCode() == 200 ? CheckStatus.SUCCESS : CheckStatus.FAIL;
         } catch (IOException e) {
-            log.warn("Check proxy NET_CONNECT_ERROR : {}",e.getMessage());
+            log.warn("Check proxy NET_CONNECT_ERROR : {}", e.getMessage());
         }
         return CheckStatus.FAIL;
     }

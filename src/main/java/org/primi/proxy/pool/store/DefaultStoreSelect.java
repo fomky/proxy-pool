@@ -1,8 +1,8 @@
 package org.primi.proxy.pool.store;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import lombok.experimental.FieldNameConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.primi.proxy.pool.entity.ProxyStatistics;
 
@@ -17,33 +17,27 @@ import java.util.*;
 @Data
 @Builder
 @NoArgsConstructor
-
+@AllArgsConstructor
+@FieldNameConstants
 public class DefaultStoreSelect implements ProxyStore, ProxySelect {
 
-    private int index;
+    @Builder.Default
+    private int index = 0;
 
-    private int size;
+    @Builder.Default
+    private int size = 0;
 
+    @Builder.Default
     private final Object lock = new Object();
 
+    @FieldNameConstants.Include
     private ProxyStore store;
 
+    @FieldNameConstants.Include
     private ProxySelect select;
 
+    @Builder.Default
     private List<ProxyStatistics> proxies = new ArrayList<>();
-
-    public DefaultStoreSelect(ProxyStore other) {
-        this.store = other;
-    }
-
-    public DefaultStoreSelect(ProxySelect select) {
-        this.select = select;
-    }
-
-    public DefaultStoreSelect(ProxyStore other, ProxySelect select) {
-        this.store = other;
-        this.select = select;
-    }
 
     private int index() {
         if (index == Integer.MAX_VALUE) {

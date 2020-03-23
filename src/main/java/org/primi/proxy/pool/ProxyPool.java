@@ -10,19 +10,33 @@ import org.primi.proxy.pool.store.ProxyStore;
  *
  * @author Primi.Chen
  */
-public interface ProxyPool {
+public interface ProxyPool<T> {
 
-    void registerSelect(ProxySelect select);
+    T registerSelect(ProxySelect select);
 
-    void registerStore(ProxyStore select);
+    T registerStore(ProxyStore select);
 
-    void registerHandler(BaseHandler handler);
+    T registerHandler(BaseHandler handler);
 
-    void initial(ProxyPoolConfig config);
+    T initial(ProxyPoolConfig config);
+
+    /**
+     * @return
+     */
+    default T initial() {
+        return initial(ProxyPoolConfig.builder().build());
+    }
+
+    ;
 
     /**
      * @return
      */
     ProxyStatistics select();
+
+
+    static DefaultProxyPool base() {
+        return DefaultProxyPool.builder().build();
+    }
 
 }

@@ -36,6 +36,7 @@ public interface BaseHandler {
 
     /**
      * request
+     *
      * @param page Page Object
      * @return Response
      * @throws IOException throws IOExceprion
@@ -53,10 +54,20 @@ public interface BaseHandler {
 
     /**
      * get the name of handler
+     *
      * @return name string
      */
-    default String handlerName(){
+    default String handlerName() {
         return this.getClass().getName();
     }
 
+
+    /**
+     * 静态代理模式 / 默认 false
+     * @return default false , if ture the Method {@link #parserPageContent(Response)}
+     */
+    default boolean staticModel() {
+
+        return false;
+    }
 }
