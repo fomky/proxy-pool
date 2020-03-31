@@ -1,8 +1,8 @@
-package org.primi.proxy.pool;
+package org.fomky.proxy.pool;
 
 import lombok.Builder;
 import lombok.Data;
-import org.primi.proxy.pool.entity.RunModel;
+import org.fomky.proxy.pool.entity.RunModel;
 
 /**
  * Create AT 2020/3/18 15:15:15:15

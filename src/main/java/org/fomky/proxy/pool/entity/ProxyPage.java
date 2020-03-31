@@ -1,11 +1,11 @@
-package org.primi.proxy.pool.entity;
+package org.fomky.proxy.pool.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import org.jsoup.Connection.*;
+import org.apache.http.NameValuePair;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Create AT 2020/3/16 15:48:15:48
@@ -14,15 +14,15 @@ import java.util.Map;
  */
 @Data
 @Builder
-public class ProxyListPage implements Serializable {
+public class ProxyPage implements Serializable {
 
     private String name;
 
     private String url;
 
-    private Method method;
+    private HttpMethod method;
 
-    private Map<String, String> parameters;
+    private List<NameValuePair> formData;
 
     private Boolean needProxy;
 }

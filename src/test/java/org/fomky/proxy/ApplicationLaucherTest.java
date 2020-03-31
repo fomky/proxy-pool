@@ -1,12 +1,10 @@
-package org.primi.proxy;
+package org.fomky.proxy;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.primi.proxy.handler.DemoHandler;
-import org.primi.proxy.pool.DefaultProxyPool;
-import org.primi.proxy.pool.ProxyPool;
-import org.primi.proxy.pool.store.DefaultStoreSelect;
+import org.fomky.proxy.pool.DefaultProxyPool;
+import org.fomky.proxy.pool.ProxyPool;
 
 /**
  * Unit test for simple App.

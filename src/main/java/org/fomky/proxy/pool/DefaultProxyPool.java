@@ -1,13 +1,13 @@
-package org.primi.proxy.pool;
+package org.fomky.proxy.pool;
 
 import com.google.common.collect.Lists;
 import lombok.Builder;
 import lombok.Data;
-import org.primi.proxy.pool.entity.ProxyStatistics;
-import org.primi.proxy.pool.handler.BaseHandler;
-import org.primi.proxy.pool.store.DefaultStoreSelect;
-import org.primi.proxy.pool.store.ProxySelect;
-import org.primi.proxy.pool.store.ProxyStore;
+import org.fomky.proxy.pool.entity.ProxyNode;
+import org.fomky.proxy.pool.handler.BaseHandler;
+import org.fomky.proxy.pool.store.DefaultStoreSelect;
+import org.fomky.proxy.pool.store.ProxySelect;
+import org.fomky.proxy.pool.store.ProxyStore;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class DefaultProxyPool implements ProxyPool<DefaultProxyPool> {
     }
 
     @Override
-    public ProxyStatistics select() {
+    public ProxyNode select() {
         return storeSelect.select();
     }
 }

@@ -1,7 +1,8 @@
-package org.primi.proxy.pool.entity;
+package org.fomky.proxy.pool.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import org.apache.http.HttpHost;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;
@@ -15,7 +16,7 @@ import java.net.Proxy;
  */
 @Data
 @Builder
-public class ProxyStatistics implements Serializable {
+public class ProxyNode implements Serializable {
     private String uid;
 
     private Proxy.Type type;
@@ -26,11 +27,16 @@ public class ProxyStatistics implements Serializable {
 
     private ProxyStatus status;
 
+    private ProxyAuth auth;
+
     public String key() {
         return String.format("%s@%s:%s", type.toString(), hostname, port);
     }
 
     public Proxy proxy() {
         return new Proxy(type, new InetSocketAddress(hostname, port));
+    }
+    public HttpHost httpHost() {
+        return new HttpHost(hostname, port);
     }
 }

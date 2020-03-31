@@ -1,10 +1,10 @@
-package org.primi.proxy.pool.store;
+package org.fomky.proxy.pool.store;
 
 import lombok.*;
 
 import lombok.experimental.FieldNameConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.primi.proxy.pool.entity.ProxyStatistics;
+import org.fomky.proxy.pool.entity.ProxyNode;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class DefaultStoreSelect implements ProxyStore, ProxySelect {
     private ProxySelect select;
 
     @Builder.Default
-    private List<ProxyStatistics> proxies = new ArrayList<>();
+    private List<ProxyNode> proxies = new ArrayList<>();
 
     private int index() {
         if (index == Integer.MAX_VALUE) {
@@ -47,7 +47,7 @@ public class DefaultStoreSelect implements ProxyStore, ProxySelect {
     }
 
     @Override
-    public void updateActives(List<ProxyStatistics> proxies) {
+    public void updateActives(List<ProxyNode> proxies) {
         synchronized (lock) {
             this.proxies = proxies;
             this.updateSize();
@@ -56,7 +56,7 @@ public class DefaultStoreSelect implements ProxyStore, ProxySelect {
     }
 
     @Override
-    public void addActive(ProxyStatistics proxy) {
+    public void addActive(ProxyNode proxy) {
         synchronized (lock) {
             this.proxies.add(proxy);
             this.updateSize();
@@ -68,7 +68,7 @@ public class DefaultStoreSelect implements ProxyStore, ProxySelect {
         this.size = this.proxies.size();
     }
 
-    public ProxyStatistics route(int indexCode) {
+    public ProxyNode route(int indexCode) {
         synchronized (lock){
             if (Objects.isNull(proxies) || size == 0) {
                 return null;
@@ -78,21 +78,30 @@ public class DefaultStoreSelect implements ProxyStore, ProxySelect {
         }
     }
 
-    public ProxyStatistics route() {
+    public ProxyNode route() {
         return route(index());
     }
 
     @Override
-    public List<ProxyStatistics> resume() {
+    public List<ProxyNode> resume() {
         Optional.of(store).ifPresent(proxyStore -> {
-            List<ProxyStatistics> list = proxyStore.resume();
+            List<ProxyNode> list = proxyStore.resume();
             this.updateActives(list);
         });
         return this.proxies;
     }
 
     @Override
-    public ProxyStatistics select() {
+    public void addActives(List<ProxyNode> proxyStatistics) {
+        synchronized (lock) {
+            this.proxies.addAll(proxyStatistics);
+            this.updateSize();
+        }
+        Optional.of(store).ifPresent(proxyStore -> proxyStore.addActives(proxyStatistics));
+    }
+
+    @Override
+    public ProxyNode select() {
         if (Optional.ofNullable(select).isPresent()) {
             return select.select();
         } else {

@@ -1,4 +1,4 @@
-package org.primi.proxy.pool.entity;
+package org.fomky.proxy.pool.entity;
 
 import java.io.Serializable;
 
